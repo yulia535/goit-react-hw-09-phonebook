@@ -1,0 +1,10 @@
+.ContactForm {
+  width: 400px;
+  border: 1px solid black;
+  padding: 10px 10px;
+}
+.inputForm {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

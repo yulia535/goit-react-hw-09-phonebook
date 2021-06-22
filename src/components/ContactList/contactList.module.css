@@ -1,0 +1,12 @@
+.contactListItem {
+  display: flex;
+  margin-bottom: 10px;
+  width: 300px;
+  justify-content: space-between;
+}
+.deleteButton {
+  display: inline;
+  margin-left: 10px;
+  background-color: #fff;
+  border-radius: 3px;
+}
