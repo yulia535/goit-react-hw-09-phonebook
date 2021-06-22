@@ -16,28 +16,34 @@ const styles = {
 };
 
 export default function LoginView() {
+  const [user, setUser] = useState({
+    email: '',
+    password:''
+  });
 
-  const [email, setEmail] = useState('');
-  const handleChangeEmail = useCallback(e => {
-    setEmail(e.target.value);
-  }, []);
+  const handleChange = useCallback( e => {
+            const { name, value } = e.target;
+            setUser(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
+    
+  , []);
 
-   const [password, setPassword] = useState('');
-  const handleChangePassword = useCallback(e => {
-    setPassword(e.target.value);
-
-  }, []);
 
   const dispatch = useDispatch();
 
    const  handleSubmit = useCallback( e => {
     e.preventDefault();
 
- dispatch(authOperations.login({email, password}));  
-     setEmail('');
-     setPassword('');
+ dispatch(authOperations.login(user));  
+     setUser({
+       email: '',
+    password:''
+     })
    
-  }, [dispatch, email, password]);
+  }, [dispatch, user]);
   
       return (
       <div>
@@ -53,8 +59,8 @@ export default function LoginView() {
             <input
               type="email"
               name="email"
-              value={email}
-              onChange={handleChangeEmail}
+              value={user.email}
+              onChange={handleChange}
             />
           </label>
 
@@ -63,8 +69,8 @@ export default function LoginView() {
             <input
               type="password"
               name="password"
-              value={password}
-              onChange={handleChangePassword}
+              value={user.password}
+              onChange={handleChange}
             />
           </label>
 
@@ -73,6 +79,17 @@ export default function LoginView() {
       </div>
     );
 }
+
+// const [email, setEmail] = useState('');
+  // const handleChangeEmail = useCallback(e => {
+  //   setEmail(e.target.value);
+  // }, []);
+
+  //  const [password, setPassword] = useState('');
+  // const handleChangePassword = useCallback(e => {
+  //   setPassword(e.target.value);
+
+  // }, []);
 
 
 // class LoginView extends Component {

@@ -5,27 +5,30 @@ import styles from '../ContactForm/contactForm.module.css';
 
 
 export default function ContactForm() {
-
-  const [name, setName ] = useState('');
-  const handleChengeName = useCallback( e => {
-    setName(e.target.value);
+  const [contact, setContact] = useState({
+    name: '',
+    number:''
+  });
+  
+  const handleChange = useCallback( e => {
+            const { name, value } = e.target;
+            setContact(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
     
-  }, []);
-
-  const  [number, setNumber]  = useState('');
-  const handleChengeNumber = useCallback( e => {
-    setNumber(e.currentTarget.value);   
-  },[]);
+  , []);
 
   const dispatch = useDispatch();
 
   const handleInputChange = useCallback(e => {
     e.preventDefault();
-    dispatch(operations.addContact({ name, number }));
-    setName('');
-    setNumber('');
+    dispatch(operations.addContact(contact));
+    setContact({name: '',
+    number:''})
 
-  },[dispatch, name, number]);
+  },[contact, dispatch]);
 
 
   return (
@@ -37,8 +40,8 @@ export default function ContactForm() {
               className={styles.inputForm}
               type="text"
               name="name"
-              value={name}
-              onChange={handleChengeName}
+              value={contact.name}
+              onChange={handleChange}
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               required
             />
@@ -49,8 +52,8 @@ export default function ContactForm() {
               className={styles.inputForm}
               type="text"
               name="number"
-              value={number}
-              onChange={handleChengeNumber}
+              value={contact.number}
+              onChange={handleChange}
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               required
             />
@@ -61,3 +64,13 @@ export default function ContactForm() {
   )
 }
 
+  // const [name, setName ] = useState('');
+  // const handleChengeName = useCallback( e => {
+  //   setName(e.target.value);
+    
+  // }, []);
+
+  // const  [number, setNumber]  = useState('');
+  // const handleChengeNumber = useCallback( e => {
+  //   setNumber(e.currentTarget.value);   
+  // },[]);

@@ -18,35 +18,33 @@ const styles = {
 };
 
 export default function RegisterView() {
+  const [newUser, setNewUser] = useState({
+    name:'',
+    email: '',
+    password:''
+  });
 
-  const [name, setName] = useState('');
-  const handleChangeName = useCallback( e => {
-    setName(e.target.value);
-
-  }, []);
-
-  const [email, setEmail] = useState('');
-  const handleChangeEmail = useCallback(e => {
-    setEmail(e.target.value);
-  }, []);
-
-   const [password, setPassword] = useState('');
-  const handleChangePassword = useCallback(e => {
-    setPassword(e.target.value);
-
-  }, []);
+  const handleChange = useCallback( e => {
+            const { name, value } = e.target;
+            setNewUser(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
+    
+  , []);
 
   const dispatch = useDispatch();
 
      const  handleSubmit = useCallback( e => {
     e.preventDefault();
 
-      dispatch(authOperations.register({name, email, password}));
-    setName('');
-     setEmail('');
-     setPassword('');
+      dispatch(authOperations.register(newUser));
+  setNewUser( { name:'',
+    email: '',
+    password:''})
    
-  }, [dispatch, email, name, password]);
+  }, [dispatch,newUser ]);
 
 
 
@@ -64,8 +62,8 @@ export default function RegisterView() {
             <input
               type="text"
               name="name"
-              value={name}
-              onChange={handleChangeName}
+              value={newUser.name}
+            onChange={handleChange}
             />
           </label>
 
@@ -74,8 +72,8 @@ export default function RegisterView() {
             <input
               type="email"
               name="email"
-              value={email}
-              onChange={handleChangeEmail}
+              value={newUser.email}
+              onChange={handleChange}
             />
           </label>
 
@@ -84,8 +82,8 @@ export default function RegisterView() {
             <input
               type="password"
               name="password"
-              value={password}
-              onChange={handleChangePassword}
+              value={newUser.password}
+              onChange={handleChange}
             />
           </label>
 
@@ -94,6 +92,23 @@ export default function RegisterView() {
       </div>
     );
 }
+
+  // const [name, setName] = useState('');
+  // const handleChangeName = useCallback( e => {
+  //   setName(e.target.value);
+
+  // }, []);
+
+  // const [email, setEmail] = useState('');
+  // const handleChangeEmail = useCallback(e => {
+  //   setEmail(e.target.value);
+  // }, []);
+
+  //  const [password, setPassword] = useState('');
+  // const handleChangePassword = useCallback(e => {
+  //   setPassword(e.target.value);
+
+  // }, []);
 
 // class RegisterView extends Component {
 //   state = {
